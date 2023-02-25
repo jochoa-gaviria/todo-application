@@ -1,11 +1,11 @@
 import React from 'react';
-import { TodoCounter } from './components/TodoCounter/TodoCounter';
-import { TodoSearch } from './components/TodoSearch/TodoSearch';
-import { TodoItem } from './components/TodoItem/TodoItem';
-import { CreateTodoButton } from './components/CreateTodo/TodoButton/CreateTodoButton';
+import { TodoCounter } from '../TodoCounter/TodoCounter';
+import { TodoSearch } from '../TodoSearch/TodoSearch';
+import { TodoItem } from '../TodoItem/TodoItem';
+import { CreateTodoButton } from '../CreateTodo/TodoButton/CreateTodoButton';
 // import { TodoInputName } from './components/CreateTodo/TodoInputName/TodoInputName';
 // import { CreateTodoCard } from './components/CreateTodo/CreateTodoCard/CreateTodoCard';
-import { TodoList } from './components/TodoList/TodoList';
+import { TodoList } from '../TodoList/TodoList';
 
 const defaultTodos = [
   { text: 'Leer', completed: false },
