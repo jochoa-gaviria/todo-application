@@ -7,14 +7,29 @@ import { CreateTodoButton } from '../CreateTodo/TodoButton/CreateTodoButton';
 // import { CreateTodoCard } from './components/CreateTodo/CreateTodoCard/CreateTodoCard';
 import { TodoList } from '../TodoList/TodoList';
 
-const defaultTodos = [
-  { text: 'Leer', completed: false },
-  { text: 'Agradecer', completed: true },
-]
+
+interface ITodo {
+  text:string;
+  completed:boolean;
+}
+// const defaultTodos = [
+//   { text: 'Leer', completed: false },
+//   { text: 'Agradecer', completed: true },
+// ]
+
+
 
 function App() {
-
-  const [todos, setTodos] = React.useState(defaultTodos);
+  let localStorageTodo = localStorage.getItem('TODOS');
+  let parsedTodos:[ITodo];
+  if (!localStorageTodo){
+    localStorageTodo = JSON.stringify([])
+    parsedTodos = JSON.parse(localStorageTodo);
+    localStorage.setItem('TODOS', JSON.stringify([]))
+  } else {
+    parsedTodos = JSON.parse(localStorageTodo);
+  }
+  const [todos, setTodos] = React.useState(parsedTodos);
   const [searchValue, setSearchValue] = React.useState('');
 
   const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -29,18 +44,23 @@ function App() {
     filterTodos = todos.filter(todo => todo.text.toLowerCase().includes(searchValue.toLowerCase()));
   }
 
+  const saveTodo = (newTodos:[ITodo]) => {
+    setTodos(newTodos);
+    localStorage.setItem('TODOS', JSON.stringify(newTodos));
+  }
+
   const completeTodo = (text:string) => {
     const index = todos.findIndex(todo => todo.text === text);
-    const newTodos = [...todos];
+    const newTodos:[ITodo] = [...todos];
     newTodos[index].completed = true;
-    setTodos(newTodos)
+    saveTodo(newTodos);
   };
 
   const deleteTodo = (text:string) => {
     const index  = todos.findIndex(todo => todo.text === text);
-    const newTodos = [...todos];
+    const newTodos:[ITodo] = [...todos];
     newTodos.splice(index, 1);
-    setTodos(newTodos);
+    saveTodo(newTodos);
   }
 
   return (
