@@ -12,27 +12,42 @@ interface ITodo {
   text:string;
   completed:boolean;
 }
+
 // const defaultTodos = [
 //   { text: 'Leer', completed: false },
 //   { text: 'Agradecer', completed: true },
 // ]
 
+export const useLocalStorage = (itemName:string, initialValue:any) => {
+
+  let localStorageItem = localStorage.getItem(itemName);
+  let parsedItem:any;
+  if (!localStorageItem){
+    localStorageItem = JSON.stringify([])
+    parsedItem = JSON.parse(localStorageItem);
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+  } else {
+    parsedItem = JSON.parse(localStorageItem);
+  }
+
+  const [item, setItem] = React.useState(parsedItem);
+
+  const saveItem = (newItem:[ITodo]) => {
+    setItem(newItem);
+    localStorage.setItem(itemName, JSON.stringify(newItem));
+  }
+  return [
+    item, saveItem
+  ]
+}
 
 
 function App() {
-  let localStorageTodo = localStorage.getItem('TODOS');
-  let parsedTodos:[ITodo];
-  if (!localStorageTodo){
-    localStorageTodo = JSON.stringify([])
-    parsedTodos = JSON.parse(localStorageTodo);
-    localStorage.setItem('TODOS', JSON.stringify([]))
-  } else {
-    parsedTodos = JSON.parse(localStorageTodo);
-  }
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const [todos, saveTodo] = useLocalStorage('TODOS', [])
+  
   const [searchValue, setSearchValue] = React.useState('');
 
-  const completedTodos = todos.filter(todo => !!todo.completed).length;
+  const completedTodos:[ITodo] = todos.filter((todo: { completed: any; }) => !!todo.completed).length;
   const totalTodos = todos.length;
   let filterTodos = [];
 
@@ -41,24 +56,20 @@ function App() {
     filterTodos = todos;
   }
   else {
-    filterTodos = todos.filter(todo => todo.text.toLowerCase().includes(searchValue.toLowerCase()));
+    filterTodos = todos.filter((todo: { text: string; }) => todo.text.toLowerCase().includes(searchValue.toLowerCase()));
   }
 
-  const saveTodo = (newTodos:[ITodo]) => {
-    setTodos(newTodos);
-    localStorage.setItem('TODOS', JSON.stringify(newTodos));
-  }
 
   const completeTodo = (text:string) => {
-    const index = todos.findIndex(todo => todo.text === text);
-    const newTodos:[ITodo] = [...todos];
+    const index = todos.findIndex((todo: { text: string; }) => todo.text === text);
+    const newTodos = [...todos];
     newTodos[index].completed = true;
     saveTodo(newTodos);
   };
 
   const deleteTodo = (text:string) => {
-    const index  = todos.findIndex(todo => todo.text === text);
-    const newTodos:[ITodo] = [...todos];
+    const index  = todos.findIndex((todo: { text: string; }) => todo.text === text);
+    const newTodos = [...todos];
     newTodos.splice(index, 1);
     saveTodo(newTodos);
   }
@@ -78,7 +89,7 @@ function App() {
         setSearchValue={setSearchValue}
       />
       <TodoList>
-          {filterTodos.map(todo => (
+          {filterTodos.map((todo: { text: string; completed: any; }) => (
               <TodoItem 
                 key={todo.text} 
                 text={todo.text}
