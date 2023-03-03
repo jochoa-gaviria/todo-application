@@ -7,5 +7,7 @@ export type TodoType = {
     loading:boolean,
     filterTodos:any,
     completeTodo:any,
-    deleteTodo:any
+    deleteTodo:any,
+    openModal:boolean,
+    setOpenModal:any
 };

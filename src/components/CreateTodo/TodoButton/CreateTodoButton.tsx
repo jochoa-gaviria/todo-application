@@ -4,14 +4,14 @@ import './CreateTodoButton.css'
 
 function CreateTodoButton(props:any){
 
-    const onClickButton = (msg:string) => {
-        alert(msg);
+    const onClickButton = () => {
+        props.setOpenModal(true)
     }
 
     return(
         <React.Fragment>
             <button className="CreateTodoButton"
-            onClick={() => onClickButton('Hiciste clic')}>+</button>
+            onClick={onClickButton}>+</button>
         </React.Fragment>
     )
 }
