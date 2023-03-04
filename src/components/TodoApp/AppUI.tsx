@@ -6,8 +6,11 @@ import { TodoItem } from '../TodoItem/TodoItem';
 import { CreateTodoButton } from '../CreateTodo/TodoButton/CreateTodoButton';
 import { Modal } from '../Modal/Modal'
 // import { TodoInputName } from './components/CreateTodo/TodoInputName/TodoInputName';
-// import { CreateTodoCard } from './components/CreateTodo/CreateTodoCard/CreateTodoCard';
 import { TodoList } from '../TodoList/TodoList';
+import { CreateTodoCard } from '../CreateTodo/CreateTodoCard/CreateTodoCard';
+import { TodoError } from '../TodoError/TodoError';
+import { TodoLoading } from '../TodoLoading/TodoLoading';
+import { TodoEmpty } from '../TodoEmpty/TodoEmpty';
 
 
 function AppUI () {
@@ -23,17 +26,13 @@ function AppUI () {
 
     return (
         <React.Fragment>
-        {/* <CreateTodoCard>
-            <TodoInputName />
-            <CreateTodoButton />
-        </CreateTodoCard> */}
         <TodoCounter />
         <TodoSearch />
 
         <TodoList>
-            {error && <p>Hubo un error...</p>}
-            {loading && <p>Estamos cargando, espera un momento...</p>}
-            {(!loading && !filterTodos?.length) && <p>Crea tu primero TODO.</p>}
+            {error && <TodoError error={error}/>}
+            {loading && <TodoLoading />}
+            {(!loading && !filterTodos?.length) && <TodoEmpty />}
 
             {filterTodos.map((todo: { text: string; completed: any; }) => (
                 <TodoItem 
@@ -45,16 +44,14 @@ function AppUI () {
                 />
             ))}
         </TodoList>
-
         {
             !!openModal && 
             (        
             <Modal>
-                <p>{filterTodos[0]?.text}</p>
+                <CreateTodoCard />
             </Modal>
             )
         }
-
         <CreateTodoButton 
             setOpenModal={setOpenModal}
         />

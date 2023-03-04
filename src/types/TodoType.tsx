@@ -9,5 +9,6 @@ export type TodoType = {
     completeTodo:any,
     deleteTodo:any,
     openModal:boolean,
-    setOpenModal:any
+    setOpenModal:any,
+    addTodo:any
 };

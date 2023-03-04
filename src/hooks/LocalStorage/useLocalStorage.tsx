@@ -22,7 +22,7 @@ export const useLocalStorage = (itemName:string, initialValue:any) => {
         } catch (error) {
           setError(true);
         }
-      }, 2000)
+      }, 10000)
     });
   
     const saveItem = (newItem:any) => {
