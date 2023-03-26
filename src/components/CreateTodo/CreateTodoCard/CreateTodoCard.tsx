@@ -1,15 +1,10 @@
 import React  from 'react';
-import { TodoContext } from '../../../hooks/TodoContext/TodoContext';
 import './CreateTodoCard.css'
 
-function CreateTodoCard(){
+function CreateTodoCard({ addTodo, setOpenModal }:any ){
 
     const [newTodoValue, setNewtodoValue] = React.useState('')
 
-    const {
-        addTodo,
-        setOpenModal
-    } = React.useContext(TodoContext)
 
     const onCancel = () => {
         setOpenModal(false);

@@ -1,12 +1,9 @@
 import React from 'react';
-import { TodoType } from '../../types/TodoType'
 import { useLocalStorage } from '../LocalStorage/useLocalStorage'
 import { ITodo } from '../../types/ITodo'
 
 
-const TodoContext = React.createContext<TodoType | any>(null);
-
-function TodoProvider(props:any) {
+function useTodos() {
 
     const { item : todos,
         saveItem: saveTodo,
@@ -54,7 +51,7 @@ function TodoProvider(props:any) {
     }
 
     return (
-        <TodoContext.Provider value = {{
+        {
             totalTodos,
             completedTodos,
             searchValue,
@@ -67,10 +64,8 @@ function TodoProvider(props:any) {
             openModal,
             setOpenModal,
             addTodo
-        }}>
-            {props.children}
-        </TodoContext.Provider>
-    )
+        }
+    );
 }
 
-export {TodoContext, TodoProvider}
+export { useTodos }
