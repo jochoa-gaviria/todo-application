@@ -11,6 +11,8 @@ import { TodoError } from '../TodoError/TodoError';
 import { TodoLoading } from '../TodoLoading/TodoLoading';
 import { TodoEmpty } from '../TodoEmpty/TodoEmpty';
 import { TodoHeader } from '../TodoHeader/TodoHeader';
+import { ITodo } from '../../types/ITodo'
+import { TodoEmptySearchResults } from '../TodoEmpty/TodoEmptySearchResults';
 
 function App() {
   const {                    
@@ -48,21 +50,38 @@ function App() {
         />
     </TodoHeader>
 
-    <TodoList>
-        {error && <TodoError error={error}/>}
-        {loading && <TodoLoading />}
-        {(!loading && !filterTodos?.length) && <TodoEmpty />}
-
-        {filterTodos.map((todo: { text: string; completed: any; }) => (
-            <TodoItem 
-            key={todo.text} 
-            text={todo.text}
-            completed={todo.completed}
-            onComplete={() => completeTodo(todo.text)}
-            onDelete={() => deleteTodo(todo.text)}
+    <TodoList
+        error={error}
+        loading={loading}
+        totalTodos={totalTodos}
+        filterTodos={filterTodos}
+        searchText={searchValue}
+        onError={() => <TodoError/>}
+        onLoading={() => <TodoLoading/>}
+        onEmptyTodos={() => <TodoEmpty/>}
+        onEmptySearchResults={(searchText:string) => <TodoEmptySearchResults searchText={searchText}/>}
+        // render={(todo:ITodo) => (
+        //     <TodoItem
+        //         key={todo.text}
+        //         text={todo.text}
+        //         completed={todo.completed}
+        //         onComplete={() => completeTodo(todo.text)}
+        //         onDelete={() => deleteTodo(todo.text)}
+        //     />
+        // )} // >> render props
+    >
+        {(todo:ITodo) => (
+            <TodoItem
+                key={todo.text}
+                text={todo.text}
+                completed={todo.completed}
+                onComplete={() => completeTodo(todo.text)}
+                onDelete={() => deleteTodo(todo.text)}
             />
-        ))}
+        )} {/*Render function */}
     </TodoList>
+        
+
     {
         !!openModal && 
         (        
