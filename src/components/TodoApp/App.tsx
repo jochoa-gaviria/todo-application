@@ -13,6 +13,7 @@ import { TodoEmpty } from '../TodoEmpty/TodoEmpty';
 import { TodoHeader } from '../TodoHeader/TodoHeader';
 import { ITodo } from '../../types/ITodo'
 import { TodoEmptySearchResults } from '../TodoEmpty/TodoEmptySearchResults';
+import { ChangeAlertWithStorageListener } from '../ChangeAlert/ChangeAlert';
 
 function App() {
   const {                    
@@ -97,6 +98,8 @@ function App() {
     <CreateTodoButton 
         setOpenModal={setOpenModal}
     />
+
+    <ChangeAlertWithStorageListener />
   </React.Fragment>
 );
 }

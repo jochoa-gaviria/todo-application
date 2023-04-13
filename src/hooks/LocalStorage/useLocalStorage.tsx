@@ -22,8 +22,8 @@ export const useLocalStorage = (itemName:string, initialValue:any) => {
         } catch (error) {
           setError(true);
         }
-      }, 10000)
-    });
+      }, 3000)
+    }, []);
   
     const saveItem = (newItem:any) => {
       try {
