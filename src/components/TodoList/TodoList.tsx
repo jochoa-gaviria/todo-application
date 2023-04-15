@@ -10,7 +10,7 @@ function TodoList(props:any){
                 {props.loading && props.onLoading()}
                 {(!props.loading && !props.totalTodos) && props.onEmptyTodos()}
                 {(!!props.totalTodos && !props.filterTodos?.length) && props.onEmptySearchResults(props.searchText)}
-                {props.filterTodos.map(renderFunc)}
+                {(!props.loading && !props.error) && props.filterTodos.map(renderFunc)}
             </section>
         </React.Fragment>
     )
